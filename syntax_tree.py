@@ -34,8 +34,8 @@ class SyntaxTree(TokenList):
         return self._token
 
     @token.setter
-    def token(self, t):
-        self._token = t
+    def token(self, token):
+        self._token = token
 
 
     @property
@@ -48,8 +48,8 @@ class SyntaxTree(TokenList):
 
 
     @lexem.setter
-    def lexem(self, lex):
-        self.lexem = lex
+    def lexem(self, lexem):
+        self.lexem = lexem
 
 
     @property

@@ -18,11 +18,24 @@ class Expression(Semantic):
     def f(tree, n):
         term = tree.get_child(0)
         right_expression = tree.get_child(1)
-        return right_expression.value.f(right_expression, term.value.f(term, super().UNDEFINED))
+        return right_expression.value.f(right_expression, term.value.f(term, self.UNDEFINED))
 
 
 class RightExpression(Semantic):
-    # TODO def f
+    # TODO add more operators
+    def f(tree, n):
+        if tree.get_child_number() == 3:
+            symbol = tree.get_child(0)
+            term = tree.get_child(1)
+            rightExpression = tree.get_child(2)
+
+            op = symbol.character
+            if op == '+':
+                return n + rightExpression.value.f(term, self.UNDEFINED)
+            elif op == '-':
+                return n + rightExpression.value.f(term, self.UNDEFINED)
+            else:
+                return n
 
 
 class Term(Semantic):
@@ -30,11 +43,24 @@ class Term(Semantic):
         term = tree.get_child(0)
         right_term = tree.get_child(1)
         
-        return right_term.value.f(right_term, term.value.f(term, super().UNDEFINED))
+        return right_term.value.f(right_term, term.value.f(term, self.UNDEFINED))
 
 
-class RightExpression(Semantic):
-        # TODO 
+class RightTerm(Semantic):
+        # TODO  add more operators
+        def f(tree, n):
+            if term.get_child_number() == 3:
+                symbol = tree.get_child(0)
+                operator = tree.get_child(1)
+                right_term = tree.get_child(2)
+                
+                op = symbol.character
+                if op == '*':
+                    return n * right_term.value.f(right_term, operator.value.f(operator, self.UNDEFINED))
+                elif op == '/':
+                    return n / right_term.value.f(right_term, operator.value.f(operator, self.UNDEFINED))
+                else:
+                    n
 
 
 class Num(Semantic):
@@ -50,21 +76,21 @@ class Num(Semantic):
             digit = tree.get_child(0)
             num = tree.get_child(1)
 
-            v = num.value.f(num, super().UNDEFINED)
-            return digit.value.f(digit, super().UNDEFINED)*_power(v)+v
+            v = num.value.f(num, self.UNDEFINED)
+            return digit.value.f(digit, self.UNDEFINED)*_power(v)+v
         else:
             digit = tree.get_child(0)
-            return digit.value.f(digit, super().UNDEFINED)
+            return digit.value.f(digit, self.UNDEFINED)
 
 
 class Operator(Semantic):
     def f(self, tree, n):
         if t.get_child_number() == 3:
             expression = tree.get_child(1)
-            return expression.value.f(expression, super().UNDEFINED)
+            return expression.value.f(expression, self.UNDEFINED)
         else:
             num = tree.get_child(0)
-            return num.value.f(num, super().UNDEFINED)
+            return num.value.f(num, self.UNDEFINED)
 
 
 class Digit(Semantic):
@@ -84,5 +110,5 @@ class Digit(Semantic):
         if symbol in digits:
             return int(symbol)
         else:
-            return super().UNDEFINED
+            return self.UNDEFINED
             
