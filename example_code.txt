@@ -1,0 +1,35 @@
+# some example Instructions in our language
+
+a = 2 * 3;
+
+if (3 > 2){3 * 3}
+
+if (3 > 2){3 * 3}else{4 * 4}
+
+if (2 > 3){3 * 3}else{if(4>1){55}else{33}}
+
+whle(True){3}
+
+True and False;
+
+True and False or True;
+
+True and (False or True);
+
+not True;
+
+not False;
+
+a = 2; b = 3; a == b;
+
+2 + 2;
+
+3 * 3;
+
+5 - 2;
+
+6 / 2;
+
+"Hello World";
+
+fun(a, b){a + b} fun(3, 5);
