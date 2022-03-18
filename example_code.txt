@@ -1,35 +1,43 @@
 # some example Instructions in our language
 
-a = 2 * 3;
+a = 2 * 3;						# expected entry in symbol table of a: 6
 
-if (3 > 2){3 * 3}
+if (3 > 2){3 * 3}					# expected 9
 
-if (3 > 2){3 * 3}else{4 * 4}
+if (3 > 2){3 * 3}else{4 * 4}				# expected 9
 
-if (2 > 3){3 * 3}else{if(4>1){55}else{33}}
+if (3 < 2){3 * 3}else{4 * 4}				# expected 16
 
-whle(True){3}
+if (2 > 3){3 * 3}else{if(4>1){55}else{33}}		# expected 55
 
-True and False;
+if (2 > 3){3 * 3}else{if(4<1){55}else{33}}		# expected 33
 
-True and False or True;
+whle(True){3}						# expected infinite loop
 
-True and (False or True);
+True and False;						# expected False
 
-not True;
+True and False or True;					# expected False
 
-not False;
+True and (False or True);				# expected True
 
-a = 2; b = 3; a == b;
+not True;						# expected False
 
-2 + 2;
+not False;						# expected True
 
-3 * 3;
+a = 2; b = 3; a == b;					# expected False
 
-5 - 2;
+2 + 2;							# expected 4
 
-6 / 2;
+3 * 3;							# expected 9
 
-"Hello World";
+5 - 2;							# expected 3
 
-fun(a, b){a + b} fun(3, 5);
+6 / 2;							# expected 3
+
+"Hello World";						
+
+fun(a, b){a + b} fun(3, 5);				# exptected 8
+
+3 * 4 + 5 - 2 * 2 / 4;					# expected 16
+
+a = 3; a + 2 						# expected syntax error ';'
