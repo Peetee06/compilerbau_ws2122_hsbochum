@@ -5,7 +5,7 @@
 # Func is a placeholder for the Backend.
 # The interface is to implement under line 69 Func.run.
 ###########
-import Func
+from LexerTokenizer import Tokenizer
 ###########
 from tkinter import *
 from tkinter.filedialog import asksaveasfilename, askopenfilename
@@ -66,7 +66,7 @@ def run():
     f = open(file_path, "r")        # open the file and read the command
     command = f.read()
     # command = f'{file_path}'
-    result, error = Func.run('<stdin>', command)        # Func.run, interface between Frontend and Backend
+    result, error = Tokenizer.run('<stdin>', command)        # Func.run, interface between Frontend and Backend
     if error:                                           # catch an error if occur
         code_output.insert('1.0', error.as_string())
     elif result:
@@ -87,8 +87,7 @@ file_menu.add_command(label='Exit', command=exit)
 menu_bar.add_cascade(label='File', menu=file_menu)
 
 run_bar = Menu(menu_bar, tearoff=0)
-run_bar.add_command(label='Run', command=run)
-menu_bar.add_cascade(label='Run', menu=run_bar)
+menu_bar.add_cascade(label='Run', command=run)
 
 compiler.config(menu=menu_bar)
 
