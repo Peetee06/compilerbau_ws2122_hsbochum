@@ -2,25 +2,25 @@ class CodeGenerator:
 
     def __init__(self, ast):
         self.ast = ast
-        # the three adress code
-        self.tac = None
+        # the intermediate representation
+        self.ir = None
 
-    def generate_tac(self, tree=None):
+    def generate_ir(self, tree=None):
         if not tree:
             tree = self.ast
         
-        tac = ""
+        ir = ""
         
         if not tree.children:
             # reached a leaf
             # code to push value to stack
-            tac = f"LOAD {tree.token.value}\n"
-            return tac
+            ir = f"LOAD {tree.token.value}\n"
+            return ir
 
         for child in tree.children:
-            tac += self.generate_tac(child)
+            ir += self.generate_ir (child)
 
-        tac += f"{tree.token}\n"
+        ir += f"{tree.token}\n"
 
-        self.tac = tac
-        return self.tac
+        self.ir = ir
+        return self.ir
