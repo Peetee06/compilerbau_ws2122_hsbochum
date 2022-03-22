@@ -1,4 +1,4 @@
-from token import Token
+from token_ import Token
 
 from semantic import (Semantic, 
                       Expression,
