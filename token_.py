@@ -26,6 +26,7 @@ class Token(object):
                    'LT',            # less than
                    'LTE',           # less than or equal
                    'COMMA',         # ,
+                   'SEMICOLON',     # ;
                    'NEWLINE',
                    'EOF'
                   ]
