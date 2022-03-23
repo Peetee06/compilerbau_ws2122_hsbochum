@@ -15,12 +15,19 @@ class AbstractStackMachine:
 
         def op(operator):
             
-            # second operand is on top of stack
-            # first operand is just below that
-            second = self.stack.pop()
-            first = self.stack.pop()
-            
-            result = eval(f"{first} {operator} {second}")
+            if operator == "not":
+                # unary operator just pop one element
+                el = self.stack.pop()
+                result = eval(f"int({operator} {el})")
+
+            else:
+                # second operand is on top of stack
+                # first operand is just below that
+                second = self.stack.pop()
+                first = self.stack.pop()
+                
+                print(f"evaluating: {first} {operator} {second}")
+                result = eval(f"{first} {operator} {second}")
 
             self.stack.append(result)
         
@@ -35,6 +42,9 @@ class AbstractStackMachine:
                 "GTE": lambda: op(">="),
                 "EQ": lambda: op("=="),
                 "NE": lambda: op("!="),
+                "and": lambda: op("and"),
+                "or": lambda: op("or"),
+                "not": lambda: op("not")
                 }
 
         jump = False
@@ -155,6 +165,7 @@ class AbstractStackMachine:
                 print(f"jumping to {jump_to}")
 
             else:
+
                 instruction_mapping[current]()
             
             print(self.stack)

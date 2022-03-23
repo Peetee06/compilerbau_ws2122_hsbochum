@@ -48,7 +48,7 @@ class Token(object):
         self.value = value
 
     def __repr__(self):
-        return f"{self.type}:{self.value}" if self.value else f"{self.type}"
+        return f"{self.type}:{self.value}" if self.value is not None else f"{self.type}"
 
     def matches(self, type_, value):
         return self.type == type_ and self.value == value

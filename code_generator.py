@@ -55,6 +55,14 @@ class CodeGenerator:
                 # label to get out of while loop
                 ir += f"LABEL while_out{idx}\n"
 
+            elif (tree.token.value == "and" 
+                  or tree.token.value == "or"
+                  or tree.token.value == "not"):
+                for child in tree.children:
+                    ir += self.generate_ir(child)
+                ir += f"{tree.token.value}\n"
+
+
         elif tree.token.type == "ASSIGN":
             # evaluate expression to assign to identifier
             ir += self.generate_ir(tree.children[1])
@@ -68,6 +76,7 @@ class CodeGenerator:
             if tree.token.type == "SEMICOLON":
                 # not an operation, just simple program flow
                 pass
+
             else:
                 ir += f"{tree.token}\n"
 
