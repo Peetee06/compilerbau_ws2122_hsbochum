@@ -36,7 +36,7 @@ a = 2; b = 3; a == b;					# expected False
 
 "Hello World";						
 
-fun(a, b){a + b}; fun(3, 5);				# exptected 8
+fun(a, b){a + b} fun(3, 5);				# exptected 8
 
 3 * 4 + 5 - 2 * 2 / 4;					# expected 16
 
