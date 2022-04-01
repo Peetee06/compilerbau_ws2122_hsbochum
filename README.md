@@ -3,13 +3,13 @@ This repository contains the code of the compiler created for module Compilerbau
 
 Die Grammatik unserer Programmiersprache ist folgendermaßen nach der w3 Definition der Notation von Syntax (https://www.w3.org/Notation.html) definiert:    
 
-``` 
+```ebnf
 Program ::= *(Instruction | Function)
   
 Instruction ::= While  
-			| Ifelse  
-			| Expression";"  
-			| ID "=" Expression";"  
+		| Ifelse  
+		| Expression";"  
+		| ID "=" Expression";"  
   
 Function ::= "def" ID "(" [*(Arg ",")Arg] ")" "{" Instruction "}"  
   
@@ -29,7 +29,7 @@ String ::= <any character>
   
 Num ::= PosNum *Digit ["." *Digit] | Digit  
   
-Digit -> "0" | PosNum  
+Digit ::= "0" | PosNum  
   
-PosNum -> "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"  
+PosNum ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"  
 ```
