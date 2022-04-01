@@ -1,16 +1,7 @@
 from token_ import Token
 
-from semantic import (Semantic, 
-                      Expression,
-                      RightExpression,
-                      Term,
-                      RightTerm,
-                      Num,
-                      Operator,
-                      Digit)
 
-class SyntaxTree():
-
+class SyntaxTree:
     def __init__(self, token):
         """
         Parameters
@@ -19,10 +10,12 @@ class SyntaxTree():
         children : List of SyntaxTree
 
         """
-        
-        self._token = token
-        self._children = []
 
+        self._token = token  # Token("ADD")
+        # children of the SyntaxTree
+        # list of SyntaxTree
+        # e.g. [SyntaxTree(Token("INT", 3)), mul_tree]
+        self._children = []
 
     @property
     def token(self):
@@ -49,19 +42,21 @@ class SyntaxTree():
         self._value = value
 
     def __repr__(self, depth=0):
-        offset = "| "*depth
+        offset = "| " * depth
         repr_ = f"{offset}{self.token}\n"
         for child in self.children:
-            repr_ += child.__repr__(depth+1)
+            repr_ += child.__repr__(depth + 1)
         return repr_
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
     def insert_subtree(self, tree):
         self.children.append(tree)
 
 
-
 def main():
-    
+
     expr = "3 + 5 * 10 - 9"
     print(f"printing tree for expression: {expr}")
     mul = Token("MUL")
@@ -80,7 +75,7 @@ def main():
     five_t = SyntaxTree(five)
     nine_t = SyntaxTree(nine)
     ten_t = SyntaxTree(ten)
-    
+
     mul_t.insert_subtree(five_t)
     mul_t.insert_subtree(ten_t)
 
@@ -93,5 +88,5 @@ def main():
     print(sub_t)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
