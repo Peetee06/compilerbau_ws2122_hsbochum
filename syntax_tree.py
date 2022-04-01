@@ -11,7 +11,10 @@ class SyntaxTree:
 
         """
 
-        self._token = token
+        self._token = token  # Token("ADD")
+        # children of the SyntaxTree
+        # list of SyntaxTree
+        # e.g. [SyntaxTree(Token("INT", 3)), mul_tree]
         self._children = []
 
     @property
