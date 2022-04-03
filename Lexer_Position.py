@@ -1,20 +1,18 @@
 class Position:
-    def __init__(self, idx, ln, col, fn, ftxt):
-        self.idx = idx
-        self.ln = ln
-        self.col = col
-        self.fn = fn
-        self.ftxt = ftxt
+    def __init__(self, index, line, column, filename, input):
+        self.index = index
+        self.line = line
+        self.column = column
+        self.filename = filename
+        self.input = input
 
-    def advance(self, current_char):
-        self.idx += 1
-        self.col += 1
-
+    def step(self, current_char = None):
+        self.index += 1
+        self.column += 1
         if current_char == '\n':
-            self.ln += 1
-            self.col = 0
-
+            self.line += 1
+            self.column = 0
         return self
 
-    def copy(self):
-        return Position(self.idx, self.ln, self.col, self.fn, self.ftxt)
+    def get_current_position(self):
+        return Position(self.index, self.line, self.column, self.filename, self.input)
