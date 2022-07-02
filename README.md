@@ -15,7 +15,7 @@ Function ::= "def" ID "(" [*(Arg ",")Arg] ")" "{" Instruction "}"
   
 While ::= "while" "(" Boolexpr ")" "{" Instruction "}"  
   
-Ifelse ::= "If" "(" Boolexpr ")" "{" Instruction "}" ["else" "{" Instruction "}"]  
+Ifelse ::= "if" "(" Boolexpr ")" "{" Instruction "}" ["else" "{" Instruction "}"]  
   
 Expression ::= Term | Boolexpr | """ [String] """ | ID "(" [*((ID|Num|String),) (ID|Num|String)] ")" ";"  
   
