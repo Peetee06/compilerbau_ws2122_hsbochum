@@ -27,7 +27,7 @@ Term ::= "(" Term ")" | (Term | Num) ("+" | "-" | "*" | "/") (Term | Num)
   
 String ::= <any character>  
   
-Num ::= PosNum *Digit ["." *Digit] | Digit  
+Num ::= PosNum *Digit ["." *Digit] | Digit ["." *Digit] | Digit  
   
 Digit ::= "0" | PosNum  
   
