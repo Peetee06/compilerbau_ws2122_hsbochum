@@ -17,7 +17,7 @@ While ::= "while" "(" Boolexpr ")" "{" Instruction "}"
   
 Ifelse ::= "if" "(" Boolexpr ")" "{" Instruction "}" ["else" "{" Instruction "}"]  
   
-Expression ::= Term | Boolexpr | """ [String] """ | ID "(" [*((ID|Num|String),) (ID|Num|String)] ")" ";"  
+Expression ::= Term | Boolexpr | ID "(" [*((ID|Num|String),) (ID|Num|String)] ")" ";"  
   
 Boolexpr ::= "(" Boolexpr ")" | Boolexpr ("and" | "or") Boolexpr | "not" Boolexpr | Comparison | "1" | "0"  
   
