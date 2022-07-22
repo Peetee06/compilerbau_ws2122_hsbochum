@@ -64,11 +64,9 @@ class AbstractStackMachine:
         # pairs of label and idx to jump to
         jumps = {}
 
-        # TODO: testcode
-        w_counter = 0
         # position in input
         pos = 0
-        while pos < len(instructions) and w_counter < 5:
+        while pos < len(instructions):
             current = instructions[pos]
             if "FUNCDEF" in current:
                 # function definition follow, skip to end of it
@@ -125,7 +123,7 @@ class AbstractStackMachine:
                 else:
                     # type is string
                     # no typecasting necessary
-                    pass
+                    value = t_value
 
                 self.stack.append(value)
 
@@ -146,7 +144,6 @@ class AbstractStackMachine:
                         # already stored position of this label
                         # jump immediately
                         pos = jumps[jump_to]
-                        w_counter += 1
                     else:
                         # didn't store position of this label yet
                         # have to advance to find it
@@ -161,7 +158,6 @@ class AbstractStackMachine:
                         # already stored position of this label
                         # jump immediately
                         pos = jumps[jump_to]
-                        w_counter += 1
                     else:
                         # didn't store position of this label yet
                         # have to advance to find it
@@ -198,7 +194,6 @@ class AbstractStackMachine:
                     # already stored position of this label
                     # jump immediately
                     pos = jumps[jump_to]
-                    w_counter += 1
                 else:
                     # didn't store position of this label yet
                     # have to advance to find it
