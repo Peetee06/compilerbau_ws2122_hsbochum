@@ -51,7 +51,7 @@ class AbstractStackMachine:
             "LTE": lambda: op("<="),
             "GTE": lambda: op(">="),
             "EQ": lambda: op("=="),
-            "NE": lambda: op("!="),
+            "NEQ": lambda: op("!="),
             "and": lambda: op("and"),
             "or": lambda: op("or"),
             "not": lambda: op("not"),

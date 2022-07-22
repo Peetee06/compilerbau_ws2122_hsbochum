@@ -14,7 +14,7 @@ class CodeGenerator:
             "LTE",
             "GTE",
             "EQ",
-            "NE",
+            "NEQ",
             "and",
             "or",
         ]
