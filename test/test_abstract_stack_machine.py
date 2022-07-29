@@ -221,7 +221,7 @@ def test_Ifelse_If():
 
 
 def test_Ifelse_Else():
-    # False and True => True
+    # False and True => False
     and_ = SyntaxTree(Token("KEYWORD", "and"))
     and_.insert_subtree(SyntaxTree(Token("INT", 0)))
     and_.insert_subtree(SyntaxTree(Token("INT", 1)))
@@ -242,7 +242,7 @@ def test_Ifelse_Else():
 
 
 def test_Ifelse_If_Else():
-    # False and True => True
+    # False and True => False
     and_ = SyntaxTree(Token("KEYWORD", "and"))
     and_.insert_subtree(SyntaxTree(Token("INT", 0)))
     and_.insert_subtree(SyntaxTree(Token("INT", 1)))
@@ -305,18 +305,27 @@ def test_While():
     increment.insert_subtree(identifier)
     increment.insert_subtree(add2)
 
+    # i = 0
+    # result = 0
     initializations = SyntaxTree(Token("SEMICOLON"))
     initializations.insert_subtree(result_assign1)
     initializations.insert_subtree(assign)
 
+    # result = result + 2
+    # i = i + 1
     loop_body = SyntaxTree(Token("SEMICOLON"))
     loop_body.insert_subtree(result_assign2)
     loop_body.insert_subtree(increment)
 
+    # while(i <= 3){result = result + 2; i = i + 1}
     while_ = SyntaxTree(Token("KEYWORD", "while"))
     while_.insert_subtree(lte)
     while_.insert_subtree(loop_body)
 
+    # i = 0
+    # result = 0
+    # while(i <= 3) {result = result + 2; i = i + 1}
+    # result
     program = SyntaxTree(Token("SEMICOLON"))
     program.insert_subtree(initializations)
     program.insert_subtree(while_)

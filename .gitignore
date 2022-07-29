@@ -1,1 +1,3 @@
 *.pyc
+.coverage
+basiclang.egg-info
