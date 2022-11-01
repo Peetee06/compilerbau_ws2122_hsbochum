@@ -125,8 +125,12 @@ class CodeGenerator:
             self.idx += 1
 
         elif tree.token.type in self.binary_operators:
-            for child in tree.children[::-1]:
-                ir += self.generate_ir(child)
+            if tree.token.type == "SUB" and len(tree.children) == 1:
+                ir += self.generate_ir(tree.children[0])
+                ir += "LOAD INT:0\n"
+            else:
+                for child in tree.children[::-1]:
+                    ir += self.generate_ir(child)
 
             # write operator
             ir += f"{tree.token}\n"

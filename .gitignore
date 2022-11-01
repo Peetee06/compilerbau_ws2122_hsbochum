@@ -1,3 +1,6 @@
 *.pyc
 .coverage
 basiclang.egg-info
+venv
+.idea
+GRAMMER.txt
