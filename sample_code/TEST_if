@@ -1,0 +1,7 @@
+if 1<=2 then
+VAR D = -3
+D+1
+END else
+2+2
+END
+
