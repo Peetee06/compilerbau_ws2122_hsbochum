@@ -1,5 +1,5 @@
 # Node for the while-expr
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

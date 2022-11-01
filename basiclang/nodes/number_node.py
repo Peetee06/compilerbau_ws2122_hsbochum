@@ -1,5 +1,5 @@
 # NODE-type for the single numbers
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

@@ -1,6 +1,6 @@
 # allows variables
 # for; expr    : KEYWORD: VAR  IDENTIFIER EQ expr
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

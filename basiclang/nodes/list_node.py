@@ -1,7 +1,7 @@
 # NEW 12.09.2022
 # used for multiple statements
 # can be used later for lists
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

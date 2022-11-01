@@ -1,7 +1,7 @@
 # for; factor
 # 			   : (PLUS|MINUS) factor -> e.g. -5
 # 			   : LPAREN expr RPAREN
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

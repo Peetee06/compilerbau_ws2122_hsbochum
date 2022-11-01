@@ -1,5 +1,5 @@
 # NODE-types for string
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 

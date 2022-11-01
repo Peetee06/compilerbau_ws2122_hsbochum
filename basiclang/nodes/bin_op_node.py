@@ -1,6 +1,6 @@
 # this NODE allows +, -, * and / operation
 # for; factor  : INT|FLOAT
-from basiclang.syntax_tree import SyntaxTree
+from syntax_tree import SyntaxTree
 from token_ import Token
 
 
