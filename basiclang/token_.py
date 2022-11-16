@@ -6,16 +6,16 @@ Constants for Nodetypes of a Syntaxtree
 
 
 class Token(object):
-    TOKEN_TYPES = ['INT',
-                   'FLOAT',
-                   'STRING',
+    TOKEN_TYPES = ['INT',   
+                   'FLOAT', 
+                   'STRING', 
                    'IDENTIFIER',
-                   'KEYWORD',
-                   'ADD',  # +
+                   'KEYWORD', 
+                   'ADD',  # + 
                    'SUB',  # -
                    'MUL',  # *
                    'DIV',  # /
-                   'ASSIGN',  # =
+                   'ASSIGN',  # = 
                    'OPEN_PAR',  # (
                    'CLOSE_PAR',  # )
                    'EQ',  # equal
@@ -24,12 +24,12 @@ class Token(object):
                    'GTE',  # greater than or equal
                    'LT',  # less than
                    'LTE',  # less than or equal
-                   'COMMA',  # ,
-                   'SEMICOLON', # ;
-                   'CALL', # call a function
-                   'NEWLINE',
-                   'EOF',
-                   'COLON'  # :
+                   'COMMA',  # , 
+                   'SEMICOLON', # ; 
+                   'CALL', # call a function 
+                   'NEWLINE', # New Line
+                   'EOF',  # End of File
+                   'COLON'  # : 
                    ]
 
     KEYWORDS = [
@@ -41,9 +41,27 @@ class Token(object):
                 'else',
                 'while',
                 'def',
-                'then', # NEW
-                'END', # NEW
+                'then',
+                'END',
                 ]
+
+    DICT_comp_operators = {
+        '=' : 'EQ',
+        '<' : 'LT',
+        '>' : 'GT',
+        '!' : 'NOT',
+        '==': 'EQ',
+        '!=': 'NEQ',
+        '<=': 'LTE',
+        '>=': 'GTE'} 
+
+    DICT_math_operators = {
+        '+' : 'ADD',
+        '-' : 'SUB',
+        '*' : 'MUL',
+        '/' : 'DIV',
+        '(' : 'OPEN_PAR',
+        ')' : 'CLOSE_PAR'}   
 
     def __init__(self, type_, value=None,  pos_start=None, pos_end=None):
         if type_ in self.TOKEN_TYPES:
@@ -53,8 +71,8 @@ class Token(object):
         self.value = value
 
         if pos_start:
-            self.pos_start = pos_start.copy()
-            self.pos_end = pos_start.copy()
+            self.pos_start = pos_start.get()
+            self.pos_end = pos_start.get()
             self.pos_end.advance()
 
         if pos_end:

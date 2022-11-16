@@ -8,8 +8,6 @@ import parser_
 ###########
 from tkinter import *
 from tkinter.filedialog import asksaveasfilename, askopenfilename
-from syntax_tree import SyntaxTree
-from token_ import Token
 from code_generator import CodeGenerator
 from abstract_stack_machine import AbstractStackMachine
 from lexer_ import Lexer

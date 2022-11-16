@@ -1,7 +1,7 @@
 import token_
 from nodes.bin_op_node import BinOpNode
 from nodes.if_node import IfNode
-from invalid_syntax_error import InvalidSyntaxError
+from parser_error_invalid_syntax import InvalidSyntaxError
 from nodes.list_node import ListNode
 from parse_result import ParseResult
 from nodes.unary_op_node import UnaryOpNode
@@ -57,8 +57,7 @@ class Parser:
 
     def parse(self):
         res = self.statement()  # 12.09.2022 grammar changed, before here was  self.expr()
-        if not res.error and self.current_tok.type != token_.Token.TOKEN_TYPES[
-            21]:  # catching an syntax error,EOF_TOKEN
+        if not res.error and self.current_tok.type != token_.Token.TOKEN_TYPES[22]:  # catching an syntax error,EOF_TOKEN
             return res.failure(InvalidSyntaxError(  # return the syntax error
                 self.current_tok.pos_start, self.current_tok.pos_end,
                 "FEHLER_1: Expected '+', '-', '*' or '/'"
@@ -75,10 +74,10 @@ class Parser:
         res = ParseResult()
 
         mul_line_statements = []
-        pos_start = self.current_tok.pos_start.copy()
+        pos_start = self.current_tok.pos_start.get()
 
         # skip if the first line is a empty line
-        while self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+        while self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
             res.register_advancement()
             self.advance()
 
@@ -93,7 +92,7 @@ class Parser:
         while True:
             # count how many NEWLINES we have
             newline_count = 0
-            while self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+            while self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
                 res.register_advancement()
                 self.advance()
                 newline_count += 1
@@ -114,7 +113,7 @@ class Parser:
         return res.success(ListNode(
             mul_line_statements,
             pos_start,
-            self.current_tok.pos_end.copy()
+            self.current_tok.pos_end.get()
         ))
 
     def func_def(self):
@@ -278,7 +277,7 @@ class Parser:
 
         # 12.09.2022
         # check for multiple line expr in body_expr
-        if self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+        if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
             res.register_advancement()
             self.advance()
 
@@ -342,7 +341,7 @@ class Parser:
         # TODO: multiline
         # 12.09.2022
         # check for multiple line expr in body_expr
-        if self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+        if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
             res.register_advancement()
             self.advance()
 
@@ -370,7 +369,7 @@ class Parser:
                 # TODO: multiline
                 # 12.09.2022
                 # check for multiple line expr in body_expr
-                if self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+                if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
                     res.register_advancement()
                     self.advance()
 
@@ -425,7 +424,7 @@ class Parser:
             # TODO: multiline
             # 12.09.2022
             # check for multiple line expr in body_expr
-            if self.current_tok.type == Token.TOKEN_TYPES[20]:  # NEWLINE_TOKEN
+            if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
                 res.register_advancement()
                 self.advance()
 
