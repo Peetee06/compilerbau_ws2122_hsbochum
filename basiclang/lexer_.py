@@ -1,6 +1,5 @@
 import string
 import token_
-from lexer_error_expected_char import ExpectedCharError
 from lexer_error_illegal_char import IllegalCharError
 from lexer_error_illegal_operator import IllegalOperatorError
 from token_ import Token

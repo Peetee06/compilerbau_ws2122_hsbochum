@@ -105,7 +105,7 @@ menu_bar.add_cascade(label='Run', menu=run_bar)
 compiler.config(menu=menu_bar)
 
 # creating a Text()-object for input
-editor = Text()
+editor = Text(height=10)
 editor.pack()
 
 # creating a Text()-object for output
