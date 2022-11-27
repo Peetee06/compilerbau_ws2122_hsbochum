@@ -37,6 +37,7 @@ Zahlen sind standardmäßig `INT`. Folgt jedoch im Laufe der Zahl ein `.` wird d
 Das Verfolgen der aktuelle Leseposition wird mit der Klasse `Position` realisiert. Am Anfang einer Zeile ist die Position `0` und zählt dann mit jedem Zeichen und Zeile hoch.
 
 Bei der Unterscheidung, ob es sich bei einer Zeichenkette um ein `KEYWORD` oder `Identifier` handelt, wird geprüft, ob sich die Zeichenkette im `Dictionary` der Keywords befindet. Tauchen die Zeichen dort nicht auf, handelt es sich automatisch um einen Identifier.
+## Syntaxanalyse (Parser)
 
 Der Parser hat die Aufgabe die vordefinierte Grammatik anzuwenden.
 Dazu hat er als Eingabegröße die eingelesene Tokenliste. Diese erhält er vom Lexer.
