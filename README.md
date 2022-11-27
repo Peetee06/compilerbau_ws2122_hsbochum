@@ -18,7 +18,9 @@ Mit Tkinter können Datei-Öffnen Dialoge angezeigt werden und die Dateipfade ab
 
 ![tkinter](img/tkinter.png "tkinter")
 
-Mit dem Klick auf Run wird das Programm ausgeführt. 
+Mit dem Klick auf Run wird das Programm ausgeführt.
+Das Ergebnis der jeweiligen Zustände wird in vier Ausgabeformate
+(Lexer Result, Parser Result, Intermediate Code Result und ASM Result) im Ausgabefenster dargestellt.
 ## Lexikalische Analyse (Lexer)
 
 ### Funktionsweise
@@ -35,6 +37,20 @@ Zahlen sind standardmäßig `INT`. Folgt jedoch im Laufe der Zahl ein `.` wird d
 Das Verfolgen der aktuelle Leseposition wird mit der Klasse `Position` realisiert. Am Anfang einer Zeile ist die Position `0` und zählt dann mit jedem Zeichen und Zeile hoch.
 
 Bei der Unterscheidung, ob es sich bei einer Zeichenkette um ein `KEYWORD` oder `Identifier` handelt, wird geprüft, ob sich die Zeichenkette im `Dictionary` der Keywords befindet. Tauchen die Zeichen dort nicht auf, handelt es sich automatisch um einen Identifier.
+
+Der Parser hat die Aufgabe die vordefinierte Grammatik anzuwenden.
+Dazu hat er als Eingabegröße die eingelesene Tokenliste. Diese erhält er vom Lexer.
+Der Parser besteht im Grunde aus drei Bestandteilen:
+- Parser (zum Übersetzten der Grammatik)
+- Nodes (dt.: Knoten, Struktur der Grammatik)
+- Parser Result (enthält das finale Ergebnis des Parsers)
+
+Jede Regel der Grammatik ist in dem Node-Ordner als Knotenstruktur hinterlegt.
+Eine einzelne Ziffer wird ebenfalls als Knoten definiert.
+Das erleichtert im Nachgang das übersetzten vom Parserergebnis zum abstrakten Syntax-Baum.
+Dafür sind Konvertierungs-Methoden in den jeweiligen Knotenklassen vorgesehen.
+Die Priorisierungen im Parserergebnis werden mittels Klammern visuell wiedergegeben. 
+
 ### Fehlerbehandlung
 
 In der Klasse `Error` wird die Grundfunktionalität für die Fehlerbehandlung definiert. Hier werden auch die `Position`- Daten benötigt, um dem Nutzer die Stelle ausgeben zu können, wo der Fehler im Code vorliegt.
@@ -56,32 +72,51 @@ Es gibt drei verschiedene Error-Typen:
 Die Grammatik unserer Programmiersprache ist folgendermaßen nach der w3 Definition der Notation von Syntax (https://www.w3.org/Notation.html) definiert:    
 
 ```ebnf
-Program ::= *(Instruction | Function)
+Program               ::= Statement
+Statement             ::= Newline *(Newline | Expression)
   
-Instruction ::= While  
-		| Ifelse  
-		| Expression";"  
-		| ID "=" Expression";"  
+Expression            ::= "VAR" Identifier "EQ" Expression  
+	                | Comparison_Expression *(("AND"|"OR") Comparison_Expression)  
   
-Function ::= "def" ID "(" [*(Arg ",")Arg] ")" "{" Instruction "}"  
+Comparison_Expression ::= "NOT" Comparison_Expression
+                        | Arithmetic_Expression *(("EQ"|"NEQ"|"GT"|"GTE"|"LT"|"LTE") Arithmetic_Expression)
   
-While ::= "while" "(" Boolexpr ")" "{" Instruction "}"  
+Arithmetic_Expression ::= Term *(("PLUS"|"MINUS" Term)
   
-Ifelse ::= "if" "(" Boolexpr ")" "{" Instruction "}" ["else" "{" Instruction "}"]  
+Term                  ::= Call *(("MUL"|"DIV") Call)
   
-Expression ::= Term | Boolexpr | ID "(" [*((ID|Num|String),) (ID|Num|String)] ")" ";"  
+Call                  ::= Factor ?("(" ?(Expression *("," Expression)) ")")
   
-Boolexpr ::= "(" Boolexpr ")" | Boolexpr ("and" | "or") Boolexpr | "not" Boolexpr | Comparison | "1" | "0"  
+Factor                ::= Negative Number
+                        | "INT" | "FLOAT" Number
+                        | Identifier | Saved_Variable
+                        | String
+                        | "()"-Prioritisation
+                        | While_Expression
+                        | If_Expression
+                        | Function_Definition
+                        
+While_Expression      ::= "while" Expression "then" Expression
+                        | Newline Statement "END"
+                        | ?Else_Expression
   
-Comparison ::= Term ("==" | "<=" | ">=" | "!=" | "<" | ">") Term  
+If_Expression         ::= "if" Expression "then" Expression
+                        | Newline Statement "END"
   
-Term ::= "(" Term ")" | (Term | Num) ("+" | "-" | "*" | "/") (Term | Num)  
+Else_Expression       ::= "else" Expression
+                        | Newline Statement "END" 
   
-String ::= <any character>  
+Function_Definition   ::= "def" ?Identifiere "(" ?(Identifier *("," Identifier)) ")" ":" Expression
   
-Num ::= PosNum *Digit ["." *Digit] | Digit ["." *Digit] | Digit  
+String                ::= <any character>
+
+Number                ::= PosNum *Digit ("."*Digit) | Digit ("." *Digit) | Digit
+
+Digit                 ::= "0" | PosNum  
   
-Digit ::= "0" | PosNum  
-  
-PosNum ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"  
+PosNum                ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"  
+
+Legend:
+* ::= means reciprocal
+? ::= means not necessary
 ```
