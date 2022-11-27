@@ -14,6 +14,8 @@ This repository contains the code of the compiler created for module Compilerbau
 
 ## Benutzeroberfläche
 
+> Hinweis: Zum Starten des Compilerprogramms wird `Python 3.9` benötigt!
+
 ### Beispielcode:
 > Im Ordner `sample_code` befinden sich Testdateien zur Sicherstellung der Funktionalität des Compilers.
 
