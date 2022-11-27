@@ -3,13 +3,20 @@ This repository contains the code of the compiler created for module Compilerbau
 
 
 # Inhaltsverzeichnis
- - Benutzeroberfläche
- - Lexikalische Analyse
--  Fehlerbehandlung
--  Parser
+- Benutzeroberfläche
+- Lexikalische Analyse
+- Fehlerbehandlung
+- Parser
+- Grammatik Definition
+- Abstrakter Syntax-Baum und Abstrakte Syntax-Maschine
+
 
 
 ## Benutzeroberfläche
+
+### Beispielcode:
+> Im Ordner `sample_code` befinden sich Testdateien zur Sicherstellung der Funktionalität des Compilers.
+
 Das Programm nutzt für die grafische Benutzeroberfläche das Python Paket tkinter. Tkinter steht für "Tk interface" und kann plattformunabhängig unter Windows, Linux und Mac OS benutzt werden.
 
 Mit Tkinter können Datei-Öffnen Dialoge angezeigt werden und die Dateipfade abgespeichert werden. Die lexikalische Analyse (Lexer) greift dann auf die entsprechend ausgewählte Datei zu. 
@@ -34,6 +41,8 @@ Je nachdem, welche Zeichen in der Tokenliste definiert sind, kann es sich dabei 
 - vergleichs Operatoren ( ` = < > ! == != <= >= ` )
 - Zahlen ( `0123456789` )
 - ASCII-Zeichen
+
+Das Ende einer Anweisung kann entweder per Semikolon `;` oder mit einem Linebreak `\n` abgeschlossen werden.
 
 Zahlen sind standardmäßig `INT`. Folgt jedoch im Laufe der Zahl ein `.` wird die Zahl mit dem Token `FLOAT` abgespeichert.
 Das Verfolgen der aktuelle Leseposition wird mit der Klasse `Position` realisiert. Am Anfang einer Zeile ist die Position `0` und zählt dann mit jedem Zeichen und Zeile hoch.
