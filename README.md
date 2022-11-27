@@ -19,8 +19,10 @@ Mit Tkinter können Datei-Öffnen Dialoge angezeigt werden und die Dateipfade ab
 ![tkinter](img/tkinter.png "tkinter")
 
 Mit dem Klick auf Run wird das Programm ausgeführt.
+Vor dem Ausführen, sollte sichergestellt sein das der Code abgespeichert wurde.
 Das Ergebnis der jeweiligen Zustände wird in vier Ausgabeformate
-(Lexer Result, Parser Result, Intermediate Code Result und ASM Result) im Ausgabefenster dargestellt.
+(Lexer Result, Parser Result, Intermediate Code (dt. Fortgeschrittener Code) Result und
+abstrakte Syntax Maschine (ASM) Result) im Ausgabefenster dargestellt.
 ## Lexikalische Analyse (Lexer)
 
 ### Funktionsweise
@@ -114,3 +116,12 @@ Legend:
 * ::= means reciprocal
 ? ::= means not necessary
 ```
+
+## Abstrakter Syntax-Baum und Abstrakte Syntax-Maschine
+
+Die Schnittstelle zwischen dem Parser und dem abstrakten Syntax-Baum bilden die
+`convert_to_syntax_tree`-Methoden in den jeweiligen Nodes.
+Das resultierende Ergebnis wird in einen abstrakten Syntax-Baum umgewandelt.
+Dieser wird wiederum in einen "Intermediate Code" übersetzt.
+Dieser Code entspricht einer Assemblersprache und spiegelt Maschinenbefehle wieder.
+Die abstrakte Syntax-Machine arbeitet diese Befehle ab und gibt abschließend das Endergebnis aus.
