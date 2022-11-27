@@ -98,10 +98,11 @@ Factor                ::= Negative Number
                         
 While_Expression      ::= "while" Expression "then" Expression
                         | Newline Statement "END"
-                        | ?Else_Expression
+                        
   
 If_Expression         ::= "if" Expression "then" Expression
                         | Newline Statement "END"
+                        | ?Else_Expression
   
 Else_Expression       ::= "else" Expression
                         | Newline Statement "END" 
