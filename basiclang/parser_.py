@@ -56,7 +56,7 @@ class Parser:
     ###############################
 
     def parse(self):
-        res = self.statement()  # 12.09.2022 grammar changed, before here was  self.expr()
+        res = self.statement()  # starting point
         if not res.error and self.current_tok.type != token_.Token.TOKEN_TYPES[22]:  # catching an syntax error,EOF_TOKEN
             return res.failure(InvalidSyntaxError(  # return the syntax error
                 self.current_tok.pos_start, self.current_tok.pos_end,
@@ -190,18 +190,7 @@ class Parser:
         res.register_advancement()
         self.advance()
         node_to_return = res.register(self.expr())
-        '''
-        # 25.10.22
-        # TODO: MULTILINE
-        # check the END statement
-        if not self.current_tok.matches(Token.TOKEN_TYPES[4], 'END'):
-            return res.failure(InvalidSyntaxError(
-                self.current_tok.pos_start, self.current_tok.pos_end,
-                f"Expected 'END'"
-            ))
-        res.register_advancement()
-        self.advance()
-        '''
+
         if res.error: return res
         return res.success(FuncNode(
             func_name_tok,
@@ -209,9 +198,8 @@ class Parser:
             node_to_return
         ))
 
-    # 26.10.22
-    # call: factor (OPEN_PAR(expr(COMMA expr)*)?CLOSE_PAR)?
     def call(self, call_name_tok):
+        # call: factor (OPEN_PAR(expr(COMMA expr)*)?CLOSE_PAR)?
         res = ParseResult()
 
         res.register_advancement()
@@ -275,7 +263,6 @@ class Parser:
         res.register_advancement()
         self.advance()
 
-        # 12.09.2022
         # check for multiple line expr in body_expr
         if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
             res.register_advancement()
@@ -284,8 +271,7 @@ class Parser:
             body_expr = res.register(self.statement())
             if res.error: return res
 
-            # TODO: use END Token to mark the end of the while body
-            # e.g.:
+            # END Token, to mark the end of the while body
             if not self.current_tok.matches(Token.TOKEN_TYPES[4], 'END'):
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
@@ -338,8 +324,6 @@ class Parser:
         res.register_advancement()
         self.advance()
 
-        # TODO: multiline
-        # 12.09.2022
         # check for multiple line expr in body_expr
         if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
             res.register_advancement()
@@ -348,8 +332,7 @@ class Parser:
             expr = res.register(self.statement())
             if res.error: return res
 
-            # TODO: use END Token to mark the end of the if body
-            # e.g.:
+            #END Token, to mark the end of the if body
             if not self.current_tok.matches(Token.TOKEN_TYPES[4], 'END'):
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
@@ -366,8 +349,6 @@ class Parser:
                 res.register_advancement()
                 self.advance()
 
-                # TODO: multiline
-                # 12.09.2022
                 # check for multiple line expr in body_expr
                 if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
                     res.register_advancement()
@@ -376,8 +357,7 @@ class Parser:
                     else_case = res.register(self.statement())
                     if res.error: return res
 
-                    # TODO: use END Token to mark the end of the if body
-                    # e.g.:
+                    # END Token, to mark the end of the if body
                     if not self.current_tok.matches(Token.TOKEN_TYPES[4], 'END'):
                         return res.failure(InvalidSyntaxError(
                             self.current_tok.pos_start, self.current_tok.pos_end,
@@ -421,8 +401,6 @@ class Parser:
             res.register_advancement()
             self.advance()
 
-            # TODO: multiline
-            # 12.09.2022
             # check for multiple line expr in body_expr
             if self.current_tok.type == Token.TOKEN_TYPES[21]:  # NEWLINE_TOKEN
                 res.register_advancement()
@@ -431,8 +409,7 @@ class Parser:
                 else_case = res.register(self.statement())
                 if res.error: return res
 
-                # TODO: use END Token to mark the end of the if body
-                # e.g.:
+                # END Token, to mark the end of the if body
                 if not self.current_tok.matches(Token.TOKEN_TYPES[4], 'END'):
                     return res.failure(InvalidSyntaxError(
                         self.current_tok.pos_start, self.current_tok.pos_end,
@@ -455,26 +432,26 @@ class Parser:
         # Syntax: if <condition> then expr
         return res.success(IfNode(cases, else_case))
 
-    # for; factor  : INT|FLOAT|STRING
-    # 			   : (PLUS|MINUS) factor
-    # 			   : LPAREN expr RPAREN
-    #              : if-expr
-    #              : while-expr
-    #
-    # for; if-expr : KEYWORD: if expr(is the condition) then expr
-    #              : (KEYWORD: else expr)"else is optional"
-    #
-    # for; while-expr: KEYWORD: while expr(is the condition) then expr
-    #
-    # checking the factor of a term
     def factor(self):
+        # for; factor  : INT|FLOAT|STRING
+        # 			   : (PLUS|MINUS) factor
+        # 			   : LPAREN expr RPAREN
+        #              : if-expr
+        #              : while-expr
+        #
+        # for; if-expr : KEYWORD: if expr(is the condition) then expr
+        #              : (KEYWORD: else expr)"else is optional"
+        #
+        # for; while-expr: KEYWORD: while expr(is the condition) then expr
+        #
+        # checking the factor of a term
         res = ParseResult()
         tok = self.current_tok  # get token
 
         # if- block check for; factor: (PLUS|MINUS) factor -> e.g. -5
         if tok.type in (
                 token_.Token.TOKEN_TYPES[5], token_.Token.TOKEN_TYPES[6]):  # check if its is one, ADD_TOKEN SUB_TOKEN
-            res.register_advancement()  # "E4"
+            res.register_advancement()
             self.advance()
             factor = res.register(self.factor())
             if res.error: return res
@@ -543,19 +520,18 @@ class Parser:
             "factor failed: Expected..."
         ))
 
-    # for; term    : factor ((MUL|DIV) factor)*
-    # 26.10.22 self.factor changed to self.call
     def term(self):
+        # for; term    : factor ((MUL|DIV) factor)*
         return self.bin_op(self.factor,
                            (token_.Token.TOKEN_TYPES[7], token_.Token.TOKEN_TYPES[8]))  # MUL_TOKEN DIV_TOKEN
 
-    # for; arith-expr    : term ((PLUS|MINUS) term)*
     def arith_expr(self):
+        # for; arith-expr    : term ((PLUS|MINUS) term)*
         return self.bin_op(self.term, (token_.Token.TOKEN_TYPES[5], token_.Token.TOKEN_TYPES[6]))
 
-    # for; comp-expr: NOT comp-expr
-    #      arith-expr ((EQ|GT|GTE|LT|LTE) arith-expr)*
     def comp_expr(self):
+        # for; comp-expr: NOT comp-expr
+        #      arith-expr ((EQ|GT|GTE|LT|LTE) arith-expr)*
         res = ParseResult()
 
         # check for:
@@ -575,8 +551,7 @@ class Parser:
             Token.TOKEN_TYPES[12], Token.TOKEN_TYPES[13], Token.TOKEN_TYPES[14],
             Token.TOKEN_TYPES[15], Token.TOKEN_TYPES[16], Token.TOKEN_TYPES[17])))
 
-        # TODO here maybe catch an ERROR InvalidSyntaxXError
-        # e.g.
+        # catch an ERROR InvalidSyntaxXError
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
@@ -584,9 +559,9 @@ class Parser:
             ))
         return res.success(node)
 
-    # for; expr    : KEYWORD:   VAR  IDENTIFIER EQ expr
-    #              : comp-expr: ((KEYWORD:AND|KEYWORD:OR) comp-expr)*
     def expr(self):
+        # for; expr    : KEYWORD:   VAR  IDENTIFIER EQ expr
+        #              : comp-expr: ((KEYWORD:AND|KEYWORD:OR) comp-expr)*
         res = ParseResult()
 
         # if true it is a VAR, else go on with BinarOP
@@ -611,17 +586,6 @@ class Parser:
             if res.error: return res
             return res.success(VarNode(var_name, expr))
 
-        # elif-block check for; if-statement
-        # elif self.current_tok.matches(token_.Token.TOKEN_TYPES[4], 'if'):
-        #    if_expr = res.register(self.if_expr())
-        #    if res.error: return res
-        #    return res.success(if_expr)
-
-        ## OLD ##
-        # for; expr    : term ((PLUS|MINUS) term)*
-        # return self.bin_op(self.term, (token_.Token.TOKEN_TYPES[5], token_.Token.TOKEN_TYPES[6]))  # ADD_TOKEN SUB_TOKEN
-        ## OLD ##
-
         # for; expr    : comp-expr ((KEYWORD: AND|KEYWORD: OR) comp-expr)*
         node = res.register(self.bin_op(self.comp_expr, ((token_.Token.TOKEN_TYPES[4], 'and'),
                                                          (token_.Token.TOKEN_TYPES[4],
@@ -634,13 +598,11 @@ class Parser:
             ))
         return res.success(node)
 
-    ###################################
-
-    # function is shared by several rules: def term, def expr etc.
-    # parameters:
-    #       func -> the rule: term, factor
-    #       ops -> operation-token-list: PLUS, MINUS, DIV, MUL
     def bin_op(self, func, ops):
+        # function is shared by several rules: def term, def expr etc.
+        # parameters:
+        #       func -> the rule: term, factor
+        #       ops -> operation-token-list: PLUS, MINUS, DIV, MUL
         res = ParseResult()
         left = res.register(func())  # get the left factor, register gives back only the node
         if res.error: return res  # if there is an error from register
