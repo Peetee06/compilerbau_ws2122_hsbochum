@@ -37,6 +37,15 @@ Zahlen sind standardmäßig `INT`. Folgt jedoch im Laufe der Zahl ein `.` wird d
 Das Verfolgen der aktuelle Leseposition wird mit der Klasse `Position` realisiert. Am Anfang einer Zeile ist die Position `0` und zählt dann mit jedem Zeichen und Zeile hoch.
 
 Bei der Unterscheidung, ob es sich bei einer Zeichenkette um ein `KEYWORD` oder `Identifier` handelt, wird geprüft, ob sich die Zeichenkette im `Dictionary` der Keywords befindet. Tauchen die Zeichen dort nicht auf, handelt es sich automatisch um einen Identifier.
+### Fehlerbehandlung
+
+In der Klasse `Error` wird die Grundfunktionalität für die Fehlerbehandlung definiert. Hier werden auch die `Position`- Daten benötigt, um dem Nutzer die Stelle ausgeben zu können, wo der Fehler im Code vorliegt.
+
+Es gibt drei verschiedene Error-Typen:
+- `IllegalCharError`: Tritt im Lexer auf, wenn ein ungültiges Zeichen eingegeben wurde, was keinem Tokentyp zugewiesen werden konnte, oder ein fehlendes Zeichen erwartet wurde
+- `IllegalOperatorError`: Tritt im Lexer auf, wenn ungültige Operatoren wie z.B. ++ oder >! benutzt werden
+- `InvalidSyntaxError`: Tritt im Parser auf, wenn die Syntax nicht korrekt eingehalten wurde
+
 ## Syntaxanalyse (Parser)
 
 Der Parser hat die Aufgabe die vordefinierte Grammatik anzuwenden.
@@ -52,24 +61,7 @@ Das erleichtert im Nachgang das übersetzten vom Parserergebnis zum abstrakten S
 Dafür sind Konvertierungs-Methoden in den jeweiligen Knotenklassen vorgesehen.
 Die Priorisierungen im Parserergebnis werden mittels Klammern visuell wiedergegeben. 
 
-### Fehlerbehandlung
-
-In der Klasse `Error` wird die Grundfunktionalität für die Fehlerbehandlung definiert. Hier werden auch die `Position`- Daten benötigt, um dem Nutzer die Stelle ausgeben zu können, wo der Fehler im Code vorliegt.
-
-Es gibt drei verschiedene Error-Typen:
-- `IllegalCharError`: Tritt im Lexer auf, wenn ein ungültiges Zeichen eingegeben wurde, was keinem Tokentyp zugewiesen werden konnte, oder ein fehlendes Zeichen erwartet wurde
-- `IllegalOperatorError`: Tritt im Lexer auf, wenn ungültige Operatoren wie z.B. ++ oder >! benutzt werden
-- `InvalidSyntaxError`: Tritt im Parser auf, wenn die Syntax nicht korrekt eingehalten wurde
-
-
-
-
-
-
-
-
-
-## Grammatik Definition
+### Grammatik Definition
 Die Grammatik unserer Programmiersprache ist folgendermaßen nach der w3 Definition der Notation von Syntax (https://www.w3.org/Notation.html) definiert:    
 
 ```ebnf
